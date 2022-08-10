@@ -1,16 +1,61 @@
 # sonnet
 
-A new Flutter project.
+This repo is the rxdart example in modern style.
 
-## Getting Started
+## The original project
 
-This project is a starting point for a Flutter application.
+[https://github.com/nhandrew/rxdartstreams](https://github.com/nhandrew/rxdartstreams)
 
-A few resources to get you started if this is your first Flutter project:
+Thanks to [@nhandrew](https://www.youtube.com/channel/UCSKeK_8IzsqwKQBJuIGJPaA)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Improvements  
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### 1.  This repo uses asset file with *rootBundle*.
+
+```dart
+    final temp = await rootBundle.loadString('assets/sonnets.txt');
+    final contents = temp.split('\n');
+```
+
+This code replaces the code below.
+
+```dart
+    var contents = await File('YOUR SONNET FILE LOCATION')
+    .openRead()
+    .transform(utf8.decoder)
+    .transform(LineSplitter()).toList();
+```
+
+So, you don't have to replace the path of sonnet.
+
+<br>
+<br>
+
+### 2. Replace deprecated *RaisedButton* with *ElevatedButton*
+
+original 
+```dart
+RaisedButton(
+    color: Colors.red,
+
+    child: Text('Engage', style: TextStyle(color: Colors.white)),
+    onPressed: () {
+        readerBloc.startReading();
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Read()));
+    },
+)
+```
+
+new
+```dart
+ElevatedButton(
+    style: ElevatedButton.styleFrom(primary: Colors.red),
+    child:
+        const Text('Engage', style: TextStyle(color: Colors.white)),
+    onPressed: () {
+        readerBloc.startReading();
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => Read()));
+    },
+)
+```
